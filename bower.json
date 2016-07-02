@@ -1,0 +1,25 @@
+{
+  "name": "wheel-swipe",
+  "main": "dist/wheel-swipe.js",
+  "version": "0.1.1",
+  "homepage": "https://github.com/andyinabox/wheel-swipe",
+  "authors": [
+    "Andy Dayton <amdayton@gmail.com>"
+  ],
+  "description": "Trigger swipe-like events with mousewheel and trackpad",
+  "keywords": [
+    "mousewheel",
+    "dom",
+    "events",
+    "trackpad",
+    "swipe"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
