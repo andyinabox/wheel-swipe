@@ -1,0 +1,16 @@
+body {
+	margin: 0;
+	padding: 0;
+	font-family: 'Helvetica', sans-serif;
+}
+
+#text {
+	position: absolute;
+	width: 100%;
+	left: 0;
+	top: 50%;
+	transform: translate(0, -50%);
+	text-align: center;
+	font-size: 20vw;
+}
+
