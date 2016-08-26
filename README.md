@@ -1,6 +1,6 @@
 # WheelSwipe
 
-Trigger swipe-like events with mousewheel and trackpad.
+Trigger swipe-like events with mousewheel and trackpad. View the a demo here: https://andyinabox.github.io/wheel-swipe/
 
 [![unstable](http://badges.github.io/stability-badges/dist/unstable.svg)](http://github.com/badges/stability-badges)
 

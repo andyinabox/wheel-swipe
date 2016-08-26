@@ -6,10 +6,12 @@
   "license": "MIT",
   "scripts": {
     "demo": "budo demo/index.js -H localhost --open --css demo/styles.css",
+    "build:demo": "budo-demo demo/index.js -o demo-dist --include data --css demo/styles.css",
+    "deploy": "npm run build:demo; gh-pages -d demo-dist; rm -rf demo-dist",
     "build": "npm run build:main; npm run build:min",
-    "build:main" : "browserify index.js --standalone WheelSwipe > dist/wheel-swipe.js",
-    "build:min" : "uglifyjs dist/wheel-swipe.js > dist/wheel-swipe.min.js",
-    "clean": "dist/*"
+    "build:main": "browserify index.js --standalone WheelSwipe > dist/wheel-swipe.js",
+    "build:min": "uglifyjs dist/wheel-swipe.js > dist/wheel-swipe.min.js",
+    "clean": "rm -r dist/*"
   },
   "author": {
     "name": "Andy Dayton",
@@ -24,6 +26,9 @@
   "devDependencies": {
     "browserify": "^13.0.1",
     "budo": "~7.1.0",
+    "budo-demo": "^0.1.3",
+    "exdat": "^0.6.2",
+    "gh-pages": "^0.11.0",
     "uglifyjs": "^2.4.10"
   },
   "repository": {

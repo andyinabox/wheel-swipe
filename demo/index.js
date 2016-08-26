@@ -1,4 +1,6 @@
+
 var WheelSwipe = require('../index');
+var dat = require('exdat');
 
 var text;
 var defaultText = "&#9774;";
@@ -6,6 +8,11 @@ var transitionTime = 300;
 
 // create new wheel swipe instance
 var ws = new WheelSwipe();
+var gui = new dat.GUI();
+
+gui.add(ws.options, 'deltaThreshold', 0, 10);
+gui.add(ws.options, 'reverseDelay', 0, 1000);
+
 
 // update text message
 function updateText(message) {
