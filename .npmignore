@@ -8,3 +8,4 @@ demo
 example
 .npmignore
 dist
+demo-dist
