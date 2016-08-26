@@ -1,6 +1,6 @@
 {
   "name": "wheel-swipe",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Trigger swipe-like events with mousewheel and trackpad",
   "main": "index.js",
   "license": "MIT",
