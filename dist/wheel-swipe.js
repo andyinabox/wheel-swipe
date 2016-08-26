@@ -1,6 +1,6 @@
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.WheelSwipe = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 module.exports = require('./src/wheel-swipe.js');
-},{"./src/wheel-swipe.js":11}],2:[function(require,module,exports){
+},{"./src/wheel-swipe.js":12}],2:[function(require,module,exports){
 module.exports = trigger;
 
 /** 
@@ -1662,15 +1662,22 @@ module.exports = function debounce(func, always, threshold, execAsap) {
  
 }
 },{}],11:[function(require,module,exports){
+// get the sign of a number
+module.exports = function sign(x) {
+    return typeof x === 'number' ? x ? x < 0 ? -1 : 1 : x === x ? 0 : NaN : NaN;
+}
+},{}],12:[function(require,module,exports){
 var mouseWheel = require('mouse-wheel');
 var mergeDefaults = require('lodash.defaults');
 var trigger = require('compat-trigger-event');
 var debounce = require('./debounce');
+var sign = require('./sign');
 
 var defaults = {
 	deltaThreshold: 1,
 	debounceThreshold: 50,
-	cancelScroll: true
+	cancelScroll: true,
+	reverseDelay: 0
 }
 
 var WheelSwipe = function(el, opts) {
@@ -1688,6 +1695,10 @@ var WheelSwipe = function(el, opts) {
 	this.options = mergeDefaults(opts, defaults);
 	this.el = el;
 
+	// used for minimizing accidental reversals
+	this.reverseTimeoutID = undefined;
+	this.lastSign = undefined;
+
 	// set handler for mouse wheel event
 	handler = debounce(this.handleMouseWheel.bind(this), this.options.debounceThreshold, true);
 
@@ -1697,16 +1708,56 @@ var WheelSwipe = function(el, opts) {
 
 WheelSwipe.prototype.handleMouseWheel = function(dx, dy, dz) {
 
+	// check to see if this is within the reversal 
+	if(this.checkReverseTimeout(dy)) {
+
 		if(Math.abs(dy) >= this.options.deltaThreshold) {
+
+			this.setReverseTimeout(dy);
+
 			if(dy > 0) {
 				trigger(this.el, 'wheelup');
 			} else {
 				trigger(this.el, 'wheeldown');
 			}
 		}	
+
+	}
 };
+
+WheelSwipe.prototype.checkReverseTimeout = function(dy) {
+
+	// pass through if no reverse delay set, or no current last sign
+	if(!this.options.reverseDelay || typeof this.lastSign === 'undefined') {
+		return true;
+	}
+
+	// only true if the same sign
+	return this.lastSign === sign(dy);
+}
+
+WheelSwipe.prototype.setReverseTimeout = function(dy) {
+
+	// reset
+	function reverseTimeout() {
+		this.lastSign = undefined;
+		this.reverseTimeoutID = undefined;
+	}
+
+	// set timeout if reverse delay is set
+	if(this.options.reverseDelay) {
+
+		// clear timeout if exists
+		if(this.reverseTimeoutID) {
+			window.clearTimeout(this.reverseTimeoutID);
+		}
+
+		this.lastSign = sign(dy);
+		this.reverseTimeoutID = window.setTimeout(reverseTimeout.bind(this), this.options.reverseDelay);
+	}
+}
 
 
 module.exports = WheelSwipe;
-},{"./debounce":10,"compat-trigger-event":2,"lodash.defaults":3,"mouse-wheel":9}]},{},[1])(1)
+},{"./debounce":10,"./sign":11,"compat-trigger-event":2,"lodash.defaults":3,"mouse-wheel":9}]},{},[1])(1)
 });
