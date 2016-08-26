@@ -7,8 +7,8 @@
   "scripts": {
     "demo": "budo demo/index.js -H localhost --open --css demo/styles.css",
     "build": "npm run build:main; npm run build:min",
-    "build:main" : "browserify index.js --standalone WheelSwipe > dist/wheel-swipe.js",
-    "build:min" : "uglifyjs dist/wheel-swipe.js > dist/wheel-swipe.min.js",
+    "build:main": "browserify index.js --standalone WheelSwipe > dist/wheel-swipe.js",
+    "build:min": "uglifyjs dist/wheel-swipe.js > dist/wheel-swipe.min.js",
     "clean": "dist/*"
   },
   "author": {
@@ -24,6 +24,7 @@
   "devDependencies": {
     "browserify": "^13.0.1",
     "budo": "~7.1.0",
+    "exdat": "^0.6.2",
     "uglifyjs": "^2.4.10"
   },
   "repository": {
