@@ -33,6 +33,7 @@ Construct a new instance.
   * `deltaThreshold` - threshold for scroll delta, can be used to only trigger when the scroll delta is a high number. Defaults to `1`
   * `debounceThreshold` - threshold for scrolling debounce. Defaults to `50`.
   * `cancelScroll` - Boolean, whether or not to cancel default scrolling behavior. Defaults to `true`.
+  *  `reverseDelay` - This sets a delay to avoid accidental reversals of swipe (can happen on some devices, namely the Apple Magic Mouse). Defaults to `0` (disabled).
 
 ## Demo
 
