@@ -11,8 +11,11 @@ var transitionTime = 300;
 var ws = new WheelSwipe();
 var gui = new dat.GUI();
 
+gui.add(ws.options, 'cancelScroll').onChange(ws.updateDebounceHandler.bind(ws));
+gui.add(ws.options, 'debounceThreshold', 0, 1000).onChange(ws.updateDebounceHandler.bind(ws));
 gui.add(ws.options, 'deltaThreshold', 0, 10);
 gui.add(ws.options, 'reverseDelay', 0, 1000);
+
 
 
 // update text message
@@ -5726,7 +5729,6 @@ var defaults = {
 }
 
 var WheelSwipe = function(el, opts) {
-	var handler;
 
 	// if dom element isn't specified
 	if(!el || !(el instanceof Element)) {
@@ -5745,10 +5747,7 @@ var WheelSwipe = function(el, opts) {
 	this.lastSign = undefined;
 
 	// set handler for mouse wheel event
-	handler = debounce(this.handleMouseWheel.bind(this), this.options.debounceThreshold, true);
-
-	// bind event
-	mouseWheel(el, handler, this.options.cancelScroll);
+	this.updateDebounceHandler();
 }
 
 WheelSwipe.prototype.handleMouseWheel = function(dx, dy, dz) {
@@ -5769,6 +5768,28 @@ WheelSwipe.prototype.handleMouseWheel = function(dx, dy, dz) {
 
 	}
 };
+
+WheelSwipe.prototype.updateDebounceHandler = function(n) {
+
+	// update the option if number is specified
+	if(typeof n === 'number') {
+		this.options.debounceThreshold = n;
+	}
+
+	// not sure if this will actually do what i need it to do
+	if(this.handler) delete this.handler;
+
+	// set the handler with debounce threhold
+	this.handler = debounce(this.handleMouseWheel.bind(this), this.options.debounceThreshold, true);
+
+	// add mousewheel event listener
+	if(this.listener) {
+		this.el.removeEventListener('wheel', this.listener);
+	}
+
+		// bind event
+	this.listener = mouseWheel(this.el, this.handler, this.options.cancelScroll);
+}
 
 WheelSwipe.prototype.checkReverseTimeout = function(dy) {
 
