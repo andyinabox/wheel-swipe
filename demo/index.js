@@ -3,7 +3,7 @@ var WheelSwipe = require('../index');
 var dat = require('exdat');
 
 var text;
-var defaultText = "&#9774;";
+var defaultText = "&#8645;";
 var transitionTime = 300;
 
 // create new wheel swipe instance
@@ -30,8 +30,8 @@ function updateText(message) {
 
 
 // add listeners
-window.addEventListener('wheelup', function(e) { updateText("&#11014;") });
-window.addEventListener('wheeldown', function(e) { updateText("&#11015;") });
+window.addEventListener('wheelup', function(e) { updateText(e.detail.toFixed(1)); });
+window.addEventListener('wheeldown', function(e) { updateText(e.detail.toFixed(1)); });
 
 // add text
 text = document.createElement('div');

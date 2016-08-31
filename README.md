@@ -41,7 +41,7 @@ To run the demo using [budo](https://github.com/mattdesl/budo):
 
 ```bash
 npm install
-npm run demo
+npm start
 ```
 
 ## Dependencies
