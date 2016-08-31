@@ -10,8 +10,11 @@ var transitionTime = 300;
 var ws = new WheelSwipe();
 var gui = new dat.GUI();
 
+gui.add(ws.options, 'cancelScroll').onChange(ws.updateDebounceHandler.bind(ws));
+gui.add(ws.options, 'debounceThreshold', 0, 1000).onChange(ws.updateDebounceHandler.bind(ws));
 gui.add(ws.options, 'deltaThreshold', 0, 10);
 gui.add(ws.options, 'reverseDelay', 0, 1000);
+
 
 
 // update text message
