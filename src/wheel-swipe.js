@@ -43,9 +43,9 @@ WheelSwipe.prototype.handleMouseWheel = function(dx, dy, dz) {
 			this.setReverseTimeout(dy);
 
 			if(dy > 0) {
-				trigger(this.el, 'wheelup');
+				trigger(this.el, 'wheelup', { detail: dy } );
 			} else {
-				trigger(this.el, 'wheeldown');
+				trigger(this.el, 'wheeldown', { detail: dy } );
 			}
 		}	
 
